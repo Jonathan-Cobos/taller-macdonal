@@ -9,6 +9,8 @@ public class AdministracionMcDonalds{
 	
 	private Cola<String> colaClientes;
 	private Cola<Pedido> colaPedidos;
+        
+        private ListaDobleEncadenada<String> lisatProductos;
 	public enum Pedido{
 		NUGGETS ("Combo Nuggets",200),
 		BIGMAC ("Combo Bigmac", 300),
@@ -28,12 +30,22 @@ public class AdministracionMcDonalds{
 			return tiempoProceso;
 		}	
 	}
+        
 	
 	public AdministracionMcDonalds(){
 		colaClientes=new Cola<String>();
 		colaPedidos=new Cola<Pedido>();
+                lisatProductos=new ListaDobleEncadenada<Producto>();
 	}
 	
+        ////producto   
+        public void agregarProductoFirst(String nom,int tiempo,int valor ){
+        lisatProductos.addFirst(nom, tiempo, valor);
+        }
+        public void agregarProductoLast(String nom,int tiempo,int valor ){
+        lisatProductos.addLast(nom, tiempo, valor);
+        }
+        /////////cientes      
 	public void agregarCliente(String nombre){
 		colaClientes.encolar(nombre);
 	}

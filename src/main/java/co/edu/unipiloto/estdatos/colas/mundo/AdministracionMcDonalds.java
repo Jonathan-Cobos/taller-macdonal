@@ -9,47 +9,57 @@ public class AdministracionMcDonalds{
 	
 	private Cola<String> colaClientes;
 	private Cola<Pedido> colaPedidos;
-        
-        private ListaDobleEncadenada<String> lisatProductos;
-	public enum Pedido{
-		NUGGETS ("Combo Nuggets",200),
-		BIGMAC ("Combo Bigmac", 300),
-		CUARTO ("Combo Cuarto de Libra", 250),
-		MCFLURRY ("McFlurry", 100);
+        private ListaDobleEncadenada<String> listaProductos;
 	
-		private final String nombre;
-		private final long tiempoProceso;
-		private Pedido(String nombre, long tiempoProceso) {
-			this.nombre = nombre;
-			this.tiempoProceso = tiempoProceso;
-		}
-		public String getNombre() {
-			return nombre;
-		}
-		public long getTiempoProceso() {
-			return tiempoProceso;
-		}	
-	}
+
+
+////pedidos 
         
+        public Pedido nuevoPedido(int hora, Producto pro, String direc){
+         Pedido orden= new Pedido(hora, pro, direc);
+            
+            return orden;
+        }
+        public Producto buscarProducto(String item){
+        return listaProductos.BuscarItem(item);   
+        }
 	
+        
+     //administracion    
 	public AdministracionMcDonalds(){
 		colaClientes=new Cola<String>();
 		colaPedidos=new Cola<Pedido>();
-                lisatProductos=new ListaDobleEncadenada<Producto>();
+                listaProductos=new ListaDobleEncadenada<String>();
 	}
 	
         ////producto   
         public void agregarProductoFirst(String nom,int tiempo,int valor ){
-        lisatProductos.addFirst(nom, tiempo, valor);
+        listaProductos.addFirst(nom, tiempo, valor);
         }
         public void agregarProductoLast(String nom,int tiempo,int valor ){
-        lisatProductos.addLast(nom, tiempo, valor);
+        listaProductos.addLast(nom, tiempo, valor);
         }
-        /////////cientes      
+        public void quitarProductoFisrt(){
+        listaProductos.removeFirst();
+        }
+        public void quitarProductoLast(){
+        listaProductos.removeLast();
+        }
+        public void cantidadProductos(){
+        listaProductos.size();
+        }
+        
+        public Iterator<String> Productos(){
+		return listaProductos.iterator();
+	}
+        
+        
+        
+        /////////clientes      
 	public void agregarCliente(String nombre){
 		colaClientes.encolar(nombre);
 	}
-	
+///	
 	public String atenderCliente(Pedido pedido){
 		try {
 			Thread.sleep(100);
@@ -62,12 +72,9 @@ public class AdministracionMcDonalds{
 	
 	public String entregarPedido(){
 		Pedido p = colaPedidos.desencolar();
-		try {
-			Thread.sleep(p.getTiempoProceso());
-		} catch (InterruptedException e) {
-
-		}
-		return p.getNombre();
+               
+                String c= colaClientes.desencolar();
+                return c;
 	}
 	
 	public int clientesEnFila(){
@@ -82,8 +89,8 @@ public class AdministracionMcDonalds{
 		return colaClientes.iterator();
 	}
 	
-	public Iterator<Pedido> pedidos(){
+	public Iterator<Pedido> mostarPedidos(){
 		return colaPedidos.iterator();
 	}
-
 }
+

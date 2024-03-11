@@ -1,4 +1,4 @@
-package co.edu.unipiloto.estdatos.colas.estructuras;
+    package co.edu.unipiloto.estdatos.colas.estructuras;
 
 public class ItemCola<T> {
 	
